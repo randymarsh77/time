@@ -61,13 +61,11 @@ public extension Time
 public extension Time
 {
 	static func + (left: Time, right: Time) -> Time {
-		let convertedInterval = right.convert(to: left.unit)
-		return Time(value: left.value + convertedInterval.value, unit: left.unit)
+		return Time(value: left.value + right.convert(to: left.unit).value, unit: left.unit)
 	}
 
 	static func - (left: Time, right: Time) -> Time {
-		let convertedInterval = right.convert(to: left.unit)
-		return Time(value: left.value - convertedInterval.value, unit: left.unit)
+		return Time(value: left.value - right.convert(to: left.unit).value, unit: left.unit)
 	}
 
 	static func == (left: Time, right: Time) -> Bool {
