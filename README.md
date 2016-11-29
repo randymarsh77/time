@@ -22,7 +22,7 @@ let mach = now.machTimeStamp
 
 Create some time with a mach value
 ```
-_ = time.FromMachTimeStamp(mach)
+_ = Time.FromMachTimeStamp(mach)
 ```
 
 Add a second
