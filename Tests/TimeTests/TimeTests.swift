@@ -29,5 +29,8 @@ class TimeTests: XCTestCase
 
 		XCTAssertTrue(timeMachPlusOneSecond - now == oneSecond)
 		XCTAssertTrue(timeMachPlusOneSecond - oneSecond == now)
+
+		XCTAssertTrue(timeMachPlusOneSecond != now)
+		XCTAssertTrue(timeMachPlusOneSecond != oneSecond)
 	}
 }
