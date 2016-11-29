@@ -16,8 +16,7 @@ public struct Time
 
 public extension Time
 {
-	public static var Now: Time
-	{
+	public static var Now: Time {
 		return Time(value: Double(mach_absolute_time() * Base) / 1_000_000_000, unit: .Seconds)
 	}
 
