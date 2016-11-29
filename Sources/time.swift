@@ -1,33 +1,81 @@
 import Foundation
 
-public class Time
+public enum Unit
 {
-	private static var Base: UInt64 = 0
+	case Seconds
+	case Milliseconds
+	case Microseconds
+	case Nanoseconds
+}
 
-	public static func Initialize()
+public struct Time
+{
+	public var value: Double
+	public var unit: Unit
+}
+
+public extension Time
+{
+	public static var Now: Time
 	{
+		return Time(value: Double(mach_absolute_time() * Base) / 1_000_000_000, unit: .Seconds)
+	}
+
+	public static func FromMachTimeStamp(_ ts: UInt64) -> Time {
+		return Time(value: Double(ts * Base) / 1_000_000_000, unit: .Seconds)
+	}
+
+	public var machTimeStamp: UInt64 {
+		return UInt64(convert(to: .Nanoseconds).value) / Time.Base
+	}
+
+	public func convert(to: Unit) -> Time {
+		return Time(value: value * Time.GetConversionFactor(unit, to), unit: to)
+	}
+
+	private static func GetConversionFactor(_ from: Unit, _ to: Unit) -> Double {
+		return Time.GetUnitConversionValue(from) / Time.GetUnitConversionValue(to)
+	}
+
+	private static func GetUnitConversionValue(_ unit: Unit) -> Double {
+		switch unit {
+		case .Seconds:
+			return 1_000_000_000
+		case .Milliseconds:
+			return 1_000_000
+		case .Microseconds:
+			return 1_000
+		case .Nanoseconds:
+			return 1
+		}
+	}
+
+	private static func InitializeBase() -> UInt64 {
 		var info = mach_timebase_info(numer: 0, denom: 0)
 		mach_timebase_info(&info)
-		Base = UInt64(info.numer / info.denom)
+		return UInt64(info.numer / info.denom)
 	}
 
-	public static func Current() -> Double
-	{
-		return Double(mach_absolute_time() * Base) / 1_000_000_000
+	private static var Base: UInt64 = InitializeBase()
+}
+
+public extension Time
+{
+	static func + (left: Time, right: Time) -> Time {
+		let convertedInterval = right.convert(to: left.unit)
+		return Time(value: left.value + convertedInterval.value, unit: left.unit)
 	}
 
-	public static func Interval(milliseconds: Double) -> Double
-	{
-		return milliseconds * 1_000_000 / 1_000_000_000
+	static func - (left: Time, right: Time) -> Time {
+		let convertedInterval = right.convert(to: left.unit)
+		return Time(value: left.value - convertedInterval.value, unit: left.unit)
 	}
 
-	public static func ConvertTimeStamp(_ ts: UInt64) -> Double
-	{
-		return Double(ts * Base) / 1_000_000_000
+	static func == (left: Time, right: Time) -> Bool {
+		return left.value == right.convert(to: left.unit).value
 	}
 
-	public static func ConvertToTimeStamp(_ time: Double) -> UInt64
-	{
-		return UInt64(time * 1_000_000_000) / Base
+	static func != (left: Time, right: Time) -> Bool {
+		return !(left == right)
 	}
 }
