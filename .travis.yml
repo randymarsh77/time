@@ -3,3 +3,7 @@ osx_image: xcode8.2
 
 script:
   - swift build
+  - xcodebuild -scheme scope build test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
