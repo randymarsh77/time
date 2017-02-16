@@ -24,6 +24,10 @@ public extension Time
 		return Time(value: Double(ts * Base) / 1_000_000_000, unit: .Seconds)
 	}
 
+	public static func FromInterval(_ interval: Double, unit: Unit) -> Time {
+		return Time(value: interval, unit: unit)
+	}
+
 	public var machTimeStamp: UInt64 {
 		return UInt64(convert(to: .Nanoseconds).value) / Time.Base
 	}
