@@ -27,18 +27,18 @@ _ = Time.FromMachTimeStamp(mach)
 
 Add a second
 ```
-let aSecondFromNow = now + Time(value: 1, unit: .Seconds)
+let aSecondFromNow = now + Time.FromInterval(1, unit: .Seconds)
 ```
 
 Subtract some micros
 ```
-_ = aSecondFromNow - Time(value: 1234, unit: .Microseconds)
+_ = aSecondFromNow - Time.FromInterval(1234, unit: .Microseconds)
 ```
 
 Compare
 ```
 _ = aSecondFromNow == now
-_ = aSecondFromNo != now
+_ = aSecondFromNow != now
 ```
 
 Make a second
