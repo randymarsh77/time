@@ -1,4 +1,4 @@
-# time
+# Time
 A small utility to handle mach_absolute_time and timestamps.
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
