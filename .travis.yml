@@ -5,6 +5,7 @@ node_js:
 
 before_script:
   - npm install -g swiftx
+  - export SWIFTX_CONFIG_PATH=builds/swift/config
 
 script:
   - swift build
@@ -12,9 +13,9 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - swiftx update-build-config --owner randymarsh77 --configPath builds/swift/config
-  - swiftx update-dependency-graph --owner randymarsh77 --configPath builds/swift/config
-  - swiftx trigger-downstream-builds --owner randymarsh77 --configPath builds/swift/config
+  - swiftx update-build-config
+  - swiftx update-dependency-graph
+  - swiftx trigger-downstream-builds
 
 after_failure:
-  - swiftx trigger-downstream-builds --owner randymarsh77 --configPath builds/swift/config --force
+  - swiftx trigger-downstream-builds --force
