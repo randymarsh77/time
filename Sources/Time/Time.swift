@@ -16,23 +16,23 @@ public struct Time
 
 public extension Time
 {
-	public static var Now: Time {
+	static var Now: Time {
 		return Time(value: Double(mach_absolute_time() * Base) / 1_000_000_000, unit: .Seconds)
 	}
 
-	public static func FromMachTimeStamp(_ ts: UInt64) -> Time {
+	static func FromMachTimeStamp(_ ts: UInt64) -> Time {
 		return Time(value: Double(ts * Base) / 1_000_000_000, unit: .Seconds)
 	}
 
-	public static func FromInterval(_ interval: Double, unit: Unit) -> Time {
+	static func FromInterval(_ interval: Double, unit: Unit) -> Time {
 		return Time(value: interval, unit: unit)
 	}
 
-	public var machTimeStamp: UInt64 {
+	var machTimeStamp: UInt64 {
 		return UInt64(convert(to: .Nanoseconds).value) / Time.Base
 	}
 
-	public func convert(to: Unit) -> Time {
+	func convert(to: Unit) -> Time {
 		return Time(value: value * Time.GetConversionFactor(unit, to), unit: to)
 	}
 
