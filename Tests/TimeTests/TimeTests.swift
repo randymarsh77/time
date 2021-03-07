@@ -5,32 +5,32 @@ class TimeTests: XCTestCase
 {
 	func test() {
 		let now = Time.Now
-		let mach = now.machTimeStamp
-		XCTAssertTrue(Time.FromMachTimeStamp(mach) == now)
+		let systemTimeStamp = now.systemTimeStamp
+		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimeStamp) == now)
 
 		let oneSecond = Time(value: 1, unit: .Seconds)
-		let timeMachPlusOneSecond = now + oneSecond
+		let systemTimePlusOneSecond = now + oneSecond
 
-		let machPlusOneSecondNano = mach + 1_000_000_000
-		XCTAssertEqual(machPlusOneSecondNano, UInt64(timeMachPlusOneSecond.convert(to: .Nanoseconds).value))
-		XCTAssertTrue(Time.FromMachTimeStamp(machPlusOneSecondNano) == timeMachPlusOneSecond)
+		let systemTimePlusOneSecondNano = systemTimeStamp + 1_000_000_000
+		XCTAssertEqual(systemTimePlusOneSecondNano, UInt64(systemTimePlusOneSecond.convert(to: .Nanoseconds).value))
+		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimePlusOneSecondNano) == systemTimePlusOneSecond)
 
-		let machPlusOneSecondMicro = (mach / 1000) + 1_000_000
-		XCTAssertEqual(machPlusOneSecondMicro, UInt64(timeMachPlusOneSecond.convert(to: .Microseconds).value))
-		XCTAssertTrue(Time.FromMachTimeStamp(machPlusOneSecondNano).convert(to: .Microseconds) == timeMachPlusOneSecond)
+		let systemTimePlusOneSecondMicro = (systemTimeStamp / 1000) + 1_000_000
+		XCTAssertEqual(systemTimePlusOneSecondMicro, UInt64(systemTimePlusOneSecond.convert(to: .Microseconds).value))
+		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimePlusOneSecondNano).convert(to: .Microseconds) == systemTimePlusOneSecond)
 
-		let machPlusOneSecondMili = (mach / 1_000_000) + 1000
-		XCTAssertEqual(machPlusOneSecondMili, UInt64(timeMachPlusOneSecond.convert(to: .Milliseconds).value))
-		XCTAssertTrue(Time.FromMachTimeStamp(machPlusOneSecondNano).convert(to: .Milliseconds) == timeMachPlusOneSecond)
+		let systemTimePlusOneSecondMili = (systemTimeStamp / 1_000_000) + 1000
+		XCTAssertEqual(systemTimePlusOneSecondMili, UInt64(systemTimePlusOneSecond.convert(to: .Milliseconds).value))
+		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimePlusOneSecondNano).convert(to: .Milliseconds) == systemTimePlusOneSecond)
 
-		let machPlusOneSecond = (mach / 1_000_000_000) + 1
-		XCTAssertEqual(machPlusOneSecond, UInt64(timeMachPlusOneSecond.convert(to: .Seconds).value))
-		XCTAssertTrue(Time.FromMachTimeStamp(machPlusOneSecondNano).convert(to: .Seconds) == timeMachPlusOneSecond)
+		let systemTimePlusOneSecondUInt64 = (systemTimeStamp / 1_000_000_000) + 1
+		XCTAssertEqual(systemTimePlusOneSecondUInt64, UInt64(systemTimePlusOneSecond.convert(to: .Seconds).value))
+		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimePlusOneSecondNano).convert(to: .Seconds) == systemTimePlusOneSecond)
 
-		XCTAssertTrue(timeMachPlusOneSecond - now == oneSecond)
-		XCTAssertTrue(timeMachPlusOneSecond - oneSecond == now)
+		XCTAssertTrue(systemTimePlusOneSecond - now == oneSecond)
+		XCTAssertTrue(systemTimePlusOneSecond - oneSecond == now)
 
-		XCTAssertTrue(timeMachPlusOneSecond != now)
-		XCTAssertTrue(timeMachPlusOneSecond != oneSecond)
+		XCTAssertTrue(systemTimePlusOneSecond != now)
+		XCTAssertTrue(systemTimePlusOneSecond != oneSecond)
 	}
 }

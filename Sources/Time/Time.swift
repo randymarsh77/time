@@ -17,18 +17,18 @@ public struct Time
 public extension Time
 {
 	static var Now: Time {
-		return Time(value: Double(mach_absolute_time() * Base) / 1_000_000_000, unit: .Seconds)
+		return Time(value: Double(SystemNanos()) / 1_000_000_000, unit: .Seconds)
 	}
 
-	static func FromMachTimeStamp(_ ts: UInt64) -> Time {
-		return Time(value: Double(ts * Base) / 1_000_000_000, unit: .Seconds)
+	static func FromSystemTimeStamp(_ ts: UInt64) -> Time {
+		return Time(value: Double(NanosFromSystemTimeStamp(ts)) / 1_000_000_000, unit: .Seconds)
 	}
 
 	static func FromInterval(_ interval: Double, unit: Unit) -> Time {
 		return Time(value: interval, unit: unit)
 	}
 
-	var machTimeStamp: UInt64 {
+	var systemTimeStamp: UInt64 {
 		return UInt64(convert(to: .Nanoseconds).value) / Time.Base
 	}
 
@@ -54,9 +54,34 @@ public extension Time
 	}
 
 	private static func InitializeBase() -> UInt64 {
+#if os(Linux)
+		return 1
+#else
 		var info = mach_timebase_info(numer: 0, denom: 0)
 		mach_timebase_info(&info)
 		return UInt64(info.numer / info.denom)
+#endif
+	}
+
+	private static func SystemNanos() -> UInt64 {
+#if os(Linux)
+		var ts = timespec()
+		let r = clock_gettime(CLOCK_MONOTONIC_RAW, &ts)
+		if r != 0 {
+			fatalError("Failure in call to clock_gettime: \(r)")
+		}
+		return UInt64(ts.tv_sec) * 1_000_000_000 + UInt64(ts.tv_nsec)
+#else
+		return mach_absolute_time() * Base
+#endif
+	}
+
+	private static  func NanosFromSystemTimeStamp(_ ts: UInt64) -> UInt64 {
+#if os(Linux)
+		return ts
+#else
+		return ts * Base
+#endif
 	}
 
 	private static var Base: UInt64 = InitializeBase()
