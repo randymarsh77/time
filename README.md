@@ -1,6 +1,6 @@
 # Time
 
-A small utility to handle mach_absolute_time and timestamps.
+A small utility to handle timestamps and intervals.
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 [![GitHub release](https://img.shields.io/github/release/randymarsh77/time.svg)]()
@@ -17,16 +17,16 @@ Create some time
 let now = Time.Now
 ```
 
-Get the mach value
+Get the system timestamp value. This is the `mach_absolute_time` on macOS and the result of `clock_gettime` using `CLOCK_MONOTONIC_RAW`, in nano seconds.
 
 ```
-let mach = now.machTimeStamp
+let ts = now.systemTimeStamp
 ```
 
-Create some time with a mach value
+Create some time with a system time stamp value
 
 ```
-_ = Time.FromMachTimeStamp(mach)
+_ = Time.FromSystemTimeStamp(ts)
 ```
 
 Add a second
