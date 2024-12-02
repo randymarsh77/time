@@ -84,7 +84,7 @@ public extension Time
 #endif
 	}
 
-	private static var Base: UInt64 = InitializeBase()
+	private static let Base: UInt64 = InitializeBase()
 }
 
 public extension Time
