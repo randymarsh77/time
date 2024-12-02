@@ -54,7 +54,7 @@ public extension Time
 	}
 
 	private static func InitializeBase() -> UInt64 {
-#if os(Linux)
+#if os(Linux) || arch(arm64)
 		return 1
 #else
 		var info = mach_timebase_info(numer: 0, denom: 0)
@@ -72,12 +72,12 @@ public extension Time
 		}
 		return UInt64(ts.tv_sec) * 1_000_000_000 + UInt64(ts.tv_nsec)
 #else
-		return mach_absolute_time() * Base
+		return clock_gettime_nsec_np(CLOCK_UPTIME_RAW) * Base
 #endif
 	}
 
 	private static  func NanosFromSystemTimeStamp(_ ts: UInt64) -> UInt64 {
-#if os(Linux)
+#if os(Linux) || arch(arm64)
 		return ts
 #else
 		return ts * Base
