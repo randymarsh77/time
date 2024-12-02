@@ -72,7 +72,7 @@ public extension Time
 		}
 		return UInt64(ts.tv_sec) * 1_000_000_000 + UInt64(ts.tv_nsec)
 #else
-		return mach_absolute_time() * Base
+		return clock_gettime_nsec_np(CLOCK_UPTIME_RAW) * Base
 #endif
 	}
 
