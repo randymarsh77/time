@@ -87,7 +87,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: coverage-reports
-          pattern: coverage-report-macos-*
+          pattern: coverage-report-*
           merge-multiple: true
 
       - name: Upload test coverage
