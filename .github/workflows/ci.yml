@@ -23,10 +23,10 @@ jobs:
 
       - name: Cache coverage report
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-reports
-          files: macos-arm64.lcov
+          path: macos-arm64.lcov
 
   macos-intel:
     name: macOS (x64)
@@ -44,10 +44,10 @@ jobs:
 
       - name: Cache coverage report
         if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-reports
-          files: macos-x64.lcov
+          path: macos-x64.lcov
 
   linux:
     name: Linux
