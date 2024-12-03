@@ -25,7 +25,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-reports
+          name: coverage-report-macos-arm64
           path: macos-arm64.lcov
 
   macos-intel:
@@ -46,7 +46,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-reports
+          name: coverage-report-macos-x64
           path: macos-x64.lcov
 
   linux:
@@ -71,7 +71,7 @@ jobs:
       - name: Restore coverage reports
         uses: actions/download-artifact@v2
         with:
-          name: coverage-reports
+          pattern: coverage-report-*
 
       - name: Upload test coverage
         uses: codecov/codecov-action@v5
