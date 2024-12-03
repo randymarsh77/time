@@ -23,6 +23,7 @@ jobs:
         with:
           fail_ci_if_error: true
           files: ./.build/debug/codecov/Time.json
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   macos-intel:
     name: macOS (x64)
