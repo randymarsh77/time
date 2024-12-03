@@ -62,12 +62,9 @@ jobs:
       - name: Build and Test
         run: swift test --enable-test-discovery --enable-code-coverage
 
-      - name: Troubleshoot
-        run: curl -sSf https://sshx.io/get | sh -s run
-
       - name: Prepare coverage report
         if: github.ref == 'refs/heads/master'
-        run: $(dirname $(realpath $(which swift)))/llvm-cov export -format="lcov" .build/x86_64-unknown-linux-gnu/debug/TimePackageTests.xctest/Contents/MacOS/TimePackageTests  -instr-profile .build/x86_64-unknown-linux-gnu/debug/codecov/default.profdata > linux.lcov
+        run: $(dirname $(realpath $(which swift)))/llvm-cov export -format="lcov" .build/debug/TimePackageTests.xctest  -instr-profile .build/debug/codecov/default.profdata > linux.lcov
 
       - name: Cache coverage report
         if: github.ref == 'refs/heads/master'
