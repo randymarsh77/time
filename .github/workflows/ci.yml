@@ -19,7 +19,10 @@ jobs:
 
       - name: Code Cov
         if: github.ref == 'refs/heads/master'
-        run: bash <(curl -s https://codecov.io/bash)
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          files: ./.build/debug/codecov/Time.json
 
   macos-intel:
     name: macOS (x64)
