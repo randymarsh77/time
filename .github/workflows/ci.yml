@@ -86,11 +86,13 @@ jobs:
       - name: Restore coverage reports
         uses: actions/download-artifact@v4
         with:
-          pattern: coverage-report-*
+          path: coverage-reports
+          pattern: coverage-report-linux
+          merge-multiple: true
 
       - name: Upload test coverage
         uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
-          files: linux.lcov
+          directory: coverage-reports
           token: ${{ secrets.CODECOV_TOKEN }}
