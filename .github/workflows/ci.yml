@@ -69,7 +69,7 @@ jobs:
     needs: [macos-arm, macos-intel, linux]
     steps:
       - name: Restore coverage reports
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           pattern: coverage-report-*
 
