@@ -8,7 +8,7 @@ class TimeTests: XCTestCase
 		let systemTimeStamp = now.systemTimeStamp
 		XCTAssertTrue(Time.FromSystemTimeStamp(systemTimeStamp) == now)
 
-		let oneSecond = Time(value: 1, unit: .Seconds)
+		let oneSecond = Time.FromInterval(1, unit: .Seconds)
 		let systemTimePlusOneSecond = now + oneSecond
 
 		let systemTimePlusOneSecondNano = systemTimeStamp + 1_000_000_000
