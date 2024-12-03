@@ -64,7 +64,7 @@ jobs:
 
       - name: Prepare coverage report
         if: github.ref == 'refs/heads/master'
-        run: xcrun llvm-cov export -format="lcov" .build/debug/TimePackageTests.xctest/Contents/MacOS/TimePackageTests  -instr-profile .build/debug/codecov/default.profdata > linux.lcov
+        run: /usr/share/swift/usr/bin/llvm-cov export -format="lcov" .build/debug/TimePackageTests.xctest/Contents/MacOS/TimePackageTests  -instr-profile .build/debug/codecov/default.profdata > linux.lcov
 
       - name: Cache coverage report
         if: github.ref == 'refs/heads/master'
