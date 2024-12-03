@@ -17,12 +17,15 @@ jobs:
       - name: Build and Test
         run: swift test --enable-code-coverage
 
-      - name: Code Cov
+      - name: Prepare coverage report
+        run: xcrun llvm-cov export -format="lcov" .build/debug/TimePackageTests.xctest/Contents/MacOS/TimePackageTests  -instr-profile .build/debug/codecov/default.profdata > info.lcov
+
+      - name: Upload test coverage
         if: github.ref == 'refs/heads/master'
         uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
-          files: ./.build/debug/codecov/Time.json
+          files: info.lcov
           token: ${{ secrets.CODECOV_TOKEN }}
 
   macos-intel:
