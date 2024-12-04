@@ -1,6 +1,7 @@
 included: 
   - Sources
   - Tests
+  - Package.swift
 
 identifier_name:
   min_length:

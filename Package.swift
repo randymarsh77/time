@@ -7,12 +7,12 @@ let package = Package(
 		.library(
 			name: "Time",
 			targets: ["Time"]
-		),
+		)
 	],
 	targets: [
 		.target(
 			name: "Time"
 		),
-        .testTarget(name: "TimeTests", dependencies: ["Time"]),
+		.testTarget(name: "TimeTests", dependencies: ["Time"]),
 	]
 )
