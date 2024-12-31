@@ -1,15 +1,15 @@
 import Foundation
 
-public enum Unit {
+public enum Unit: Sendable {
 	case seconds
 	case milliseconds
 	case microseconds
 	case nanoseconds
 }
 
-public struct Time {
-	public var value: Double
-	public var unit: Unit
+public struct Time: Sendable {
+	public let value: Double
+	public let unit: Unit
 }
 
 extension Time {
